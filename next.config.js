@@ -3,20 +3,19 @@ const nextConfig = {
   reactStrictMode: true,
   async rewrites() {
     return [
-      // Serve root HTML
+      // Serve homepage without writing /index.html
       { source: '/', destination: '/index.html' },
 
-      // Proxy endpoints (specific first)
+      // PHP-style endpoints mapped to Next.js routes
       { source: '/secureproxy.php', destination: '/route/secureproxy' },
       { source: '/route/secureproxy.php', destination: '/route/secureproxy' },
 
-      // Map /route index variants
+      // Auto-load /route/index.html without writing the filename
       { source: '/route', destination: '/route/index.html' },
       { source: '/route/', destination: '/route/index.html' },
-      { source: '/route/index.html', destination: '/route/index.html' },
 
-      // Route all /route/* requests
-      { source: '/route/:path*', destination: '/route/:path*' },
+      // Auto-load HTML files inside /route without typing .html
+      { source: '/route/:path*', destination: '/route/:path*.html' },
     ];
   },
 };
